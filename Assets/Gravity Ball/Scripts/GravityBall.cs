@@ -114,17 +114,26 @@ public class GravityBall : MonoBehaviour
             return 0;
         }
 
+        // Swipe를 하고 있다면, 값을 억누르기
+        float inputFactorBySwipe = 1.0f;
+
+        if (m_Rigidbody.angularVelocity.sqrMagnitude >= 1.0f)
+        {
+            inputFactorBySwipe = 1.0f / m_Rigidbody.angularVelocity.sqrMagnitude;
+        }
+
+
         Vector3 deltaVec = m_Rigidbody.position - m_StartPos;
 
         Vector3 relativeVec = deltaVec / m_ControlRange;
 
         if (inputName == m_XDistanceInputName)
         {
-            return Mathf.Clamp(relativeVec.x, -1.0f, 1.0f);
+            return Mathf.Clamp(relativeVec.x, -1.0f, 1.0f) * inputFactorBySwipe;
         }
         else if (inputName == m_ZDistanceINputName)
         {
-            return Mathf.Clamp(relativeVec.z, -1.0f, 1.0f);
+            return Mathf.Clamp(relativeVec.z, -1.0f, 1.0f) * inputFactorBySwipe;
         }
 
         Debug.LogError("Can't Find Input Name: " + inputName);

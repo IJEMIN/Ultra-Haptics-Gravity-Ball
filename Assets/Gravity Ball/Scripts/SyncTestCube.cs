@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SyncTestCube : MonoBehaviour {
 
+    public float m_MoveSpeed = 2f;
+
     public float m_ScrollSpeed = 30f;
 
     public float m_YawSpeed = 30f;
@@ -34,10 +36,15 @@ public class SyncTestCube : MonoBehaviour {
             m_ColorMaterial.color = Color.white;
         }
 
+        float xInput = GravityBall.Instance.GetInputAxis("Horizontal");
+        float zIput = GravityBall.Instance.GetInputAxis("Vertical");
+
+        transform.Translate(xInput * m_MoveSpeed * Time.deltaTime, 0, zIput * m_MoveSpeed * Time.deltaTime, Space.World);
+
         float scroll = GravityBall.Instance.GetInputSwipe("Scroll");
         float yaw = GravityBall.Instance.GetInputSwipe("Stroke");
 
-        transform.Rotate(scroll * m_ScrollSpeed, yaw * m_YawSpeed, 0f,Space.World);
+        transform.Rotate(scroll * m_ScrollSpeed * Time.deltaTime, yaw * m_YawSpeed * Time.deltaTime, 0f,Space.World);
     }
    
 }

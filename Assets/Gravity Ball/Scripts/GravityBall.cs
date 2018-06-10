@@ -98,7 +98,7 @@ public class GravityBall : MonoBehaviour
             return false;
         }
 
-        if ((m_StartPos.y - m_Rigidbody.position.y) >= m_ControlRange * 0.75f)
+        if ((m_StartPos.y - m_Rigidbody.position.y) >= m_ControlRange * 0.5f)
         {
             return true;
         }
@@ -169,17 +169,19 @@ public class GravityBall : MonoBehaviour
             angularVelocity.y = 0;
         }
 
+        float factorByButton = GetButton() ? 0.1f : 1.0f;
+
         if (inputName == m_XSwipeInputName)
         {
-            return Mathf.Clamp(angularVelocity.x, -1f, 1f);
+            return Mathf.Clamp(angularVelocity.x, -1f, 1f) * factorByButton;
         }
         else if (inputName == m_YSwipeInputName)
         {
-            return Mathf.Clamp(angularVelocity.y, -1f, 1f);
+            return Mathf.Clamp(angularVelocity.y, -1f, 1f) * factorByButton;
         }
         else if (inputName == m_ZSwipeInputName)
         {
-            return Mathf.Clamp(angularVelocity.z, -1f, 1f);
+            return Mathf.Clamp(angularVelocity.z, -1f, 1f) * factorByButton;
         }
 
 
